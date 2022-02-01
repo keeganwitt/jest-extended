@@ -7,3 +7,4 @@ coverage
 .vs
 .vscode
 package-lock.json
+tsconfig.tsbuildinfo
