@@ -1,20 +1,11 @@
-export function toBeBetween(actual: unknown, startDate: Date, endDate: Date) {
-  // @ts-expect-error OK to have implicit any for this.utils
-  const { matcherHint, printReceived } = this.utils;
+import { dateMatcher } from './utils';
 
-  const pass = actual instanceof Date && actual >= startDate && actual <= endDate;
-
-  return {
-    pass,
-    message: () =>
-      pass
-        ? matcherHint('.not.toBeBetween', 'received', '') +
-          '\n\n' +
-          `Expected date to be between ${printReceived(startDate)} and ${printReceived(endDate)} but received:\n` +
-          `  ${printReceived(actual)}`
-        : matcherHint('.toBeBetween', 'received', '') +
-          '\n\n' +
-          `Expected date to be between ${printReceived(startDate)} and ${printReceived(endDate)} but received:\n` +
-          `  ${printReceived(actual)}`,
-  };
+export function toBeBetween(this: any, actual: unknown, startDate: Date, endDate: Date) {
+  return dateMatcher(
+    this,
+    'toBeBetween',
+    (actualDate: Date) => actualDate >= startDate && actualDate <= endDate,
+    actual,
+    `between ${this.utils.printReceived(startDate)} and ${this.utils.printReceived(endDate)}`,
+  );
 }

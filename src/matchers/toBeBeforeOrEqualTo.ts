@@ -1,20 +1,11 @@
-export function toBeBeforeOrEqualTo(actual: unknown, expected: Date) {
-  // @ts-expect-error OK to have implicit any for this.utils
-  const { matcherHint, printReceived } = this.utils;
+import { dateMatcher } from './utils';
 
-  const pass = actual instanceof Date && actual <= expected;
-
-  return {
-    pass,
-    message: () =>
-      pass
-        ? matcherHint('.not.toBeBeforeOrEqualTo', 'received', '') +
-          '\n\n' +
-          `Expected date to be before or equal to ${printReceived(expected)} but received:\n` +
-          `  ${printReceived(actual)}`
-        : matcherHint('.toBeBeforeOrEqualTo', 'received', '') +
-          '\n\n' +
-          `Expected date to be before or equal to ${printReceived(expected)} but received:\n` +
-          `  ${printReceived(actual)}`,
-  };
+export function toBeBeforeOrEqualTo(this: any, actual: unknown, expected: Date) {
+  return dateMatcher(
+    this,
+    'toBeBeforeOrEqualTo',
+    (actualDate: Date) => actualDate <= expected,
+    actual,
+    `before or equal to ${this.utils.printReceived(expected)}`,
+  );
 }
