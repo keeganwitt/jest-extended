@@ -46,7 +46,7 @@ interface CustomMatchers<R> extends Record<string, any> {
    * Use `.toBeArrayOfSize` when checking if a value is an `Array` of size x.
    * @param {Number} x
    */
-  toBeArrayOfSize(x: number): R;
+  toBeArrayOfSize(x?: number): R;
 
   /**
    * Use `.toBeAfter` when checking if a date occurs after `date`.
@@ -515,7 +515,7 @@ declare namespace jest {
      * Use `.toBeArrayOfSize` when checking if a value is an `Array` of size x.
      * @param {Number} x
      */
-    toBeArrayOfSize(x: number): R;
+    toBeArrayOfSize(x?: number): R;
 
     /**
      * Use `.toBeAfter` when checking if a date occurs after `date`.
