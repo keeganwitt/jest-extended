@@ -1,3 +1,5 @@
+import { isEmptyIterable } from '../utils';
+
 export function toBeEmpty(actual: unknown) {
   // @ts-expect-error OK to have implicit any for this.utils
   const { printReceived, matcherHint } = this.utils;
@@ -19,11 +21,3 @@ export function toBeEmpty(actual: unknown) {
           `  ${printReceived(actual)}`,
   };
 }
-
-const isEmptyIterable = (value: any) => {
-  if (typeof value[Symbol.iterator] !== 'function') {
-    return false;
-  }
-  const firstIteration = value[Symbol.iterator]().next();
-  return firstIteration.done;
-};

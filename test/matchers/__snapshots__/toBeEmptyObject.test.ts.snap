@@ -1,10 +1,38 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`.not.toBeEmptyObject fails when given an empty Map 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).not.toBeEmptyObject()</intensity>
+
+Expected value to not be an empty object, received:
+  <red>Map {}</color>"
+`;
+
+exports[`.not.toBeEmptyObject fails when given an empty Set 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).not.toBeEmptyObject()</intensity>
+
+Expected value to not be an empty object, received:
+  <red>Set {}</color>"
+`;
+
 exports[`.not.toBeEmptyObject fails when given an empty object 1`] = `
 "<dim>expect(</intensity><red>received</color><dim>).not.toBeEmptyObject()</intensity>
 
 Expected value to not be an empty object, received:
   <red>{}</color>"
+`;
+
+exports[`.toBeEmptyObject fails when given a non-empty Map 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).toBeEmptyObject()</intensity>
+
+Expected value to be an empty object, received:
+  <red>Map {"a" => 1}</color>"
+`;
+
+exports[`.toBeEmptyObject fails when given a non-empty Set 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).toBeEmptyObject()</intensity>
+
+Expected value to be an empty object, received:
+  <red>Set {1}</color>"
 `;
 
 exports[`.toBeEmptyObject fails when not given an empty object 1`] = `

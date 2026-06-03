@@ -12,3 +12,11 @@ export const isJestMockOrSpy: any = (value: any) => {
 
 export const containsEntry = (equals: any, obj: any, [key, value]: [any, any]) =>
   obj != null && Object.hasOwn(obj, key) && equals(obj[key], value);
+
+export const isEmptyIterable = (value: any) => {
+  if (value === null || value === undefined || typeof value[Symbol.iterator] !== 'function') {
+    return false;
+  }
+  const firstIteration = value[Symbol.iterator]().next();
+  return !!firstIteration.done;
+};
