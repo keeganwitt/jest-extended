@@ -1,4 +1,4 @@
-import { isJestMockOrSpy } from 'src/utils';
+import { isJestMockOrSpy, smallest } from 'src/utils';
 
 export function toHaveBeenCalledBefore(
   actual: unknown,
@@ -57,8 +57,6 @@ const mockCheckFailMessage = (utils: any, value: unknown, isReceivedValue: boole
     utils.printWithType(valueKind, value, valueKindPrintFunc)
   );
 };
-
-const smallest = (ns: number[]) => ns.reduce((acc: number, n: number) => (acc < n ? acc : n));
 
 const predicate = (
   firstInvocationCallOrder: number[],

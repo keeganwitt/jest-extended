@@ -1,4 +1,4 @@
-import { isJestMockOrSpy } from 'src/utils';
+import { isJestMockOrSpy, smallest } from 'src/utils';
 
 export function toHaveBeenCalledAfter(
   actual: unknown,
@@ -44,8 +44,6 @@ export function toHaveBeenCalledAfter(
           `  ${printReceived(secondInvocationCallOrder)}`,
   };
 }
-
-const smallest = (ns: number[]) => ns.reduce((acc: number, n: number) => (acc < n ? acc : n));
 
 const predicate = (
   firstInvocationCallOrder: number[],

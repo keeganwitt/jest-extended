@@ -1,4 +1,4 @@
-import { contains, containsEntry, determinePropertyMessage, isJestMockOrSpy } from 'src/utils';
+import { contains, containsEntry, determinePropertyMessage, isJestMockOrSpy, smallest } from 'src/utils';
 
 let equals;
 
@@ -100,6 +100,20 @@ describe('Utils', () => {
       const obj = Object.create(null);
       obj.foo = 'bar';
       expect(containsEntry(equals, obj, ['foo', 'bar'])).toBe(true);
+    });
+  });
+
+  describe('.smallest', () => {
+    test('returns the smallest number in an array', () => {
+      expect(smallest([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5])).toBe(1);
+    });
+
+    test('returns the only number in a single-element array', () => {
+      expect(smallest([42])).toBe(42);
+    });
+
+    test('returns the smallest negative number', () => {
+      expect(smallest([-1, -5, -2])).toBe(-5);
     });
   });
 });
