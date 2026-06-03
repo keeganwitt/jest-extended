@@ -32,17 +32,16 @@ const predicate = (equals: any, actual: any, expected: any) => {
     return false;
   }
 
-  const remaining = expected.reduce((remaining, secondValue) => {
-    if (remaining === null) return remaining;
-
+  const remaining = [...actual];
+  for (const secondValue of expected) {
     const index = remaining.findIndex((firstValue: any) => equals(secondValue, firstValue));
 
     if (index === -1) {
-      return null;
+      return false;
     }
 
-    return remaining.slice(0, index).concat(remaining.slice(index + 1));
-  }, actual);
+    remaining.splice(index, 1);
+  }
 
-  return !!remaining && remaining.length === 0;
+  return remaining.length === 0;
 };
