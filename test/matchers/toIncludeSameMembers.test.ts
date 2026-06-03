@@ -8,6 +8,7 @@ describe('.toIncludeSameMembers', () => {
   });
 
   test('passes when arrays match', () => {
+    expect([1]).toIncludeSameMembers([1]);
     expect([1, 2, 3]).toIncludeSameMembers([1, 2, 3]);
     expect([{ foo: 'bar' }, { baz: 'qux' }]).toIncludeSameMembers([{ foo: 'bar' }, { baz: 'qux' }]);
   });
@@ -17,15 +18,19 @@ describe('.toIncludeSameMembers', () => {
     expect([{ foo: 'bar' }, { baz: 'qux' }]).toIncludeSameMembers([{ baz: 'qux' }, { foo: 'bar' }]);
   });
 
+  test('passes when arrays contain null, undefined or NaN', () => {
+    expect([null, undefined, NaN]).toIncludeSameMembers([NaN, undefined, null]);
+  });
+
   test('fails when the arrays are not equal in length', () => {
     expect(() => expect([1, 2]).toIncludeSameMembers([1])).toThrowErrorMatchingSnapshot();
   });
 
-  test('fails when expected is not an array', () => {
+  test('fails when actual is not an array', () => {
     expect(() => expect(new Set([1, 2])).toIncludeSameMembers([1])).toThrowErrorMatchingSnapshot();
   });
 
-  test('fails when actual is not an array', () => {
+  test('fails when expected is not an array', () => {
     // @ts-expect-error this is intentional for the test
     expect(() => expect([1, 2]).toIncludeSameMembers(new Set([1]))).toThrowErrorMatchingSnapshot();
   });
@@ -43,10 +48,13 @@ describe('.not.toIncludeSameMembers', () => {
 
   test('passes when given object is not an array', () => {
     expect(4).not.toIncludeSameMembers([4, 5, 6]);
+    expect([]).not.toIncludeSameMembers(new Set() as any);
+    expect(new Set()).not.toIncludeSameMembers([] as any);
   });
 
   test('passes when arrays do not match', () => {
     expect([]).not.toIncludeSameMembers([1]);
+    expect([1]).not.toIncludeSameMembers([]);
     expect([1]).not.toIncludeSameMembers([1, 1]);
     expect([1, 2]).not.toIncludeSameMembers([1, 2, 2]);
     expect([1, 2, 3]).not.toIncludeSameMembers([2, 3, 4]);
