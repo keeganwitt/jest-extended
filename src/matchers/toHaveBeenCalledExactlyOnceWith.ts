@@ -1,18 +1,14 @@
-import { isJestMockOrSpy } from 'src/utils';
+import { isJestMockOrSpy, mockCheckFailMessage } from 'src/utils';
 
 export function toHaveBeenCalledExactlyOnceWith(received: unknown, ...expected: unknown[]) {
   // @ts-expect-error OK to have implicit any for this.utils
-  const { printReceived, printExpected, printWithType, matcherHint } = this.utils;
+  const { printReceived, printExpected, matcherHint } = this.utils;
 
   if (!isJestMockOrSpy(received)) {
     return {
       pass: false,
-      message: () =>
-        matcherHint('.toHaveBeenCalledExactlyOnceWith', 'received', '') +
-        '\n\n' +
-        `Matcher error: ${printReceived('received')} must be a mock or spy function` +
-        '\n\n' +
-        printWithType('Received', received, printReceived),
+      // @ts-expect-error OK to have implicit any for this.utils
+      message: mockCheckFailMessage(this.utils, '.toHaveBeenCalledExactlyOnceWith', received, true, 'received', ''),
     };
   }
 

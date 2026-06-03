@@ -1,4 +1,4 @@
-import { isJestMockOrSpy } from 'src/utils';
+import { isJestMockOrSpy, mockCheckFailMessage } from 'src/utils';
 
 export function toHaveBeenCalledAfter(
   actual: unknown,
@@ -10,12 +10,12 @@ export function toHaveBeenCalledAfter(
 
   if (!isJestMockOrSpy(actual)) {
     // @ts-expect-error OK to have implicit any for this.utils
-    return { pass: false, message: mockCheckFailMessage(this.utils, actual, true) };
+    return { pass: false, message: mockCheckFailMessage(this.utils, '.toHaveBeenCalledAfter', actual, true) };
   }
 
   if (!isJestMockOrSpy(expected)) {
     // @ts-expect-error OK to have implicit any for this.utils
-    return { pass: false, message: mockCheckFailMessage(this.utils, expected, false) };
+    return { pass: false, message: mockCheckFailMessage(this.utils, '.toHaveBeenCalledAfter', expected, false) };
   }
 
   let pass = false;
@@ -61,15 +61,3 @@ const predicate = (
   return firstSmallest > secondSmallest;
 };
 
-const mockCheckFailMessage = (utils: any, value: unknown, isReceivedValue: boolean) => () => {
-  const valueKind = isReceivedValue ? 'Received' : 'Expected';
-  const valueKindPrintFunc = isReceivedValue ? utils.printReceived : utils.printExpected;
-
-  return (
-    utils.matcherHint('.toHaveBeenCalledAfter') +
-    '\n\n' +
-    `Matcher error: ${valueKindPrintFunc(valueKind.toLowerCase())} must be a mock or spy function` +
-    '\n\n' +
-    utils.printWithType(valueKind, value, valueKindPrintFunc)
-  );
-};

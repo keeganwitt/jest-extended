@@ -1,4 +1,4 @@
-import { isJestMockOrSpy } from 'src/utils';
+import { isJestMockOrSpy, mockCheckFailMessage } from 'src/utils';
 
 export function toHaveBeenCalledBefore(
   actual: unknown,
@@ -10,12 +10,12 @@ export function toHaveBeenCalledBefore(
 
   if (!isJestMockOrSpy(actual)) {
     // @ts-expect-error OK to have implicit any for this.utils
-    return { pass: false, message: mockCheckFailMessage(this.utils, actual, true) };
+    return { pass: false, message: mockCheckFailMessage(this.utils, '.toHaveBeenCalledBefore', actual, true) };
   }
 
   if (!isJestMockOrSpy(expected)) {
     // @ts-expect-error OK to have implicit any for this.utils
-    return { pass: false, message: mockCheckFailMessage(this.utils, expected, false) };
+    return { pass: false, message: mockCheckFailMessage(this.utils, '.toHaveBeenCalledBefore', expected, false) };
   }
 
   let pass = false;
@@ -44,19 +44,6 @@ export function toHaveBeenCalledBefore(
           `  ${printReceived(secondInvocationCallOrder)}`,
   };
 }
-
-const mockCheckFailMessage = (utils: any, value: unknown, isReceivedValue: boolean) => () => {
-  const valueKind = isReceivedValue ? 'Received' : 'Expected';
-  const valueKindPrintFunc = isReceivedValue ? utils.printReceived : utils.printExpected;
-
-  return (
-    utils.matcherHint('.toHaveBeenCalledBefore') +
-    '\n\n' +
-    `Matcher error: ${valueKindPrintFunc(valueKind.toLowerCase())} must be a mock or spy function` +
-    '\n\n' +
-    utils.printWithType(valueKind, value, valueKindPrintFunc)
-  );
-};
 
 const smallest = (ns: number[]) => ns.reduce((acc: number, n: number) => (acc < n ? acc : n));
 
