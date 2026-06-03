@@ -20,10 +20,10 @@ export function toBeEmpty(actual: unknown) {
   };
 }
 
-const isEmptyIterable = (value: any) => {
-  if (typeof value[Symbol.iterator] !== 'function') {
+const isEmptyIterable = (value: unknown) => {
+  if (typeof (value as any)[Symbol.iterator] !== 'function') {
     return false;
   }
-  const firstIteration = value[Symbol.iterator]().next();
+  const firstIteration = (value as any)[Symbol.iterator]().next();
   return firstIteration.done;
 };

@@ -1,4 +1,4 @@
-export function toBeNaN(actual: any) {
+export function toBeNaN(actual: unknown) {
   // @ts-expect-error OK to have implicit any for this.utils
   const { printReceived, matcherHint } = this.utils;
 

@@ -19,5 +19,5 @@ export function toBeInteger(actual: unknown) {
   };
 }
 
-const isNumber = (value: any) => !isNaN(parseInt(value));
-const isInteger = (value: any) => Number.isInteger(+value);
+const isNumber = (value: unknown) => !isNaN(parseInt(value as string));
+const isInteger = (value: unknown) => Number.isInteger(+(value as number));

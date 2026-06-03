@@ -19,9 +19,9 @@ export function toBePositive(actual: unknown) {
   };
 }
 
-const isNumber = (value: any) => typeof value === 'number' && !isNaN(value) && isFinite(value);
-const isBigInt = (value: any) => typeof value === 'bigint';
-const isPositive = (value: any) => {
+const isNumber = (value: unknown): value is number => typeof value === 'number' && !isNaN(value) && isFinite(value);
+const isBigInt = (value: unknown): value is bigint => typeof value === 'bigint';
+const isPositive = (value: unknown) => {
   if (typeof value === 'bigint') return value > 0n;
-  return value > 0;
+  return (value as number) > 0;
 };
