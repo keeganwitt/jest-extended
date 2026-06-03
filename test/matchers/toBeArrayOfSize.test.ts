@@ -28,18 +28,15 @@ describe('.toBeArrayOfSize', () => {
   );
 
   test('fails when not given an array', () => {
-    // @ts-expect-error TODO: fix
-    expect(() => expect().toBeArrayOfSize(5)).toThrowErrorMatchingSnapshot();
+    expect(() => expect(undefined).toBeArrayOfSize(5)).toThrowErrorMatchingSnapshot();
   });
 
   test('fails when not given a parameter', () => {
-    // @ts-expect-error TODO: fix
-    expect(() => expect([1]).toBeArrayOfSize()).toThrowErrorMatchingSnapshot();
+    expect(() => expect([1]).toBeArrayOfSize(undefined as unknown as number)).toThrowErrorMatchingSnapshot();
   });
 
   test('fails when given neither a parameter nor an array', () => {
-    // @ts-expect-error TODO: fix
-    expect(() => expect([]).toBeArrayOfSize()).toThrowErrorMatchingSnapshot();
+    expect(() => expect([]).toBeArrayOfSize(undefined as unknown as number)).toThrowErrorMatchingSnapshot();
   });
 });
 
