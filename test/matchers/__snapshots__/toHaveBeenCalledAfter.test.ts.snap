@@ -13,18 +13,18 @@ exports[`.not.toHaveBeenCalledAfter fails when given first mock is called after 
 "<dim>expect(</intensity><red>received</color><dim>).not.toHaveBeenCalledAfter(</intensity><green>expected</color><dim>)</intensity>
 
 Expected first mock to not have been called after, invocationCallOrder:
-  <green>[19]</color>
+  <green>[21]</color>
 Received second mock with invocationCallOrder:
-  <red>[18]</color>"
+  <red>[20]</color>"
 `;
 
 exports[`.not.toHaveBeenCalledAfter fails when given first mock is called after several calls to second mock 1`] = `
 "<dim>expect(</intensity><red>received</color><dim>).not.toHaveBeenCalledAfter(</intensity><green>expected</color><dim>)</intensity>
 
 Expected first mock to not have been called after, invocationCallOrder:
-  <green>[26, 27, 28]</color>
+  <green>[28, 29, 30]</color>
 Received second mock with invocationCallOrder:
-  <red>[25]</color>"
+  <red>[27]</color>"
 `;
 
 exports[`.toHaveBeenCalledAfter failIfNoFirstInvocation is passed as true failed when given first mock has not been called 1`] = `
@@ -45,20 +45,29 @@ Received second mock with invocationCallOrder:
   <red>[]</color>"
 `;
 
+exports[`.toHaveBeenCalledAfter fails when given first mock has not been called and a second mock has been called 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).toHaveBeenCalledAfter(</intensity><green>expected</color><dim>)</intensity>
+
+Expected first mock to have been called after, invocationCallOrder:
+  <green>[]</color>
+Received second mock with invocationCallOrder:
+  <red>[1]</color>"
+`;
+
 exports[`.toHaveBeenCalledAfter fails when given first mock is called before multiple calls to second mock 1`] = `
 "<dim>expect(</intensity><red>received</color><dim>).toHaveBeenCalledAfter(</intensity><green>expected</color><dim>)</intensity>
 
 Expected first mock to have been called after, invocationCallOrder:
-  <green>[6, 8]</color>
+  <green>[7, 9]</color>
 Received second mock with invocationCallOrder:
-  <red>[7, 9, 10]</color>"
+  <red>[8, 10, 11]</color>"
 `;
 
 exports[`.toHaveBeenCalledAfter fails when given first mock that has been called and a second mock that has not been called 1`] = `
 "<dim>expect(</intensity><red>received</color><dim>).toHaveBeenCalledAfter(</intensity><green>expected</color><dim>)</intensity>
 
 Expected first mock to have been called after, invocationCallOrder:
-  <green>[1]</color>
+  <green>[2]</color>
 Received second mock with invocationCallOrder:
   <red>[]</color>"
 `;

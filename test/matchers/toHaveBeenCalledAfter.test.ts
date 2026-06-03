@@ -10,6 +10,13 @@ describe('.toHaveBeenCalledAfter', () => {
     expect(() => expect(mock1).toHaveBeenCalledAfter(mock2)).toThrowErrorMatchingSnapshot();
   });
 
+  test('fails when given first mock has not been called and a second mock has been called', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock2();
+    expect(() => expect(mock1).toHaveBeenCalledAfter(mock2)).toThrowErrorMatchingSnapshot();
+  });
+
   test('fails when given first mock that has been called and a second mock that has not been called', () => {
     const mock1 = jest.fn();
     const mock2 = jest.fn();
@@ -92,6 +99,13 @@ describe('.toHaveBeenCalledAfter', () => {
       const mock1 = jest.fn();
       const mock2 = jest.fn();
 
+      expect(mock1).toHaveBeenCalledAfter(mock2, false);
+    });
+
+    test('passes when given first mock has not been called and a second mock has been called', () => {
+      const mock1 = jest.fn();
+      const mock2 = jest.fn();
+      mock2();
       expect(mock1).toHaveBeenCalledAfter(mock2, false);
     });
   });
