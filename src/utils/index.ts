@@ -1,5 +1,11 @@
 export const contains = (equals: any, list: any, value: any) => {
-  return list.findIndex((item: any) => equals(item, value)) > -1;
+  const length = list.length;
+  for (let i = 0; i < length; i++) {
+    if (equals(list[i], value)) {
+      return true;
+    }
+  }
+  return false;
 };
 
 export const determinePropertyMessage = (actual: any, property: any, message = 'Not Accessible') => {
