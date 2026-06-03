@@ -28,7 +28,6 @@ describe('.toBeArrayOfSize', () => {
   );
 
   test('fails when not given an array', () => {
-    // @ts-expect-error TODO: fix
     expect(() => expect().toBeArrayOfSize(5)).toThrowErrorMatchingSnapshot();
   });
 
