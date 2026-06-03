@@ -5,7 +5,7 @@ interface CustomMatchers<R> extends Record<string, any> {
    *
    * @param {String} message
    */
-  pass(message: string): R;
+  pass(message?: string): R;
 
   /**
    * Note: Currently unimplemented
@@ -13,7 +13,7 @@ interface CustomMatchers<R> extends Record<string, any> {
    *
    * @param {String} message
    */
-  fail(message: string): R;
+  fail(message?: string): R;
 
   /**
    * Use .toBeEmpty when checking if a String '', Array [] or Object {} is empty.
@@ -466,15 +466,17 @@ interface CustomMatchers<R> extends Record<string, any> {
 }
 
 declare namespace jest {
+  type MyJestMatchers<R, T> = Matchers<R, T> & { not: Matchers<R, T> };
+
   // noinspection JSUnusedGlobalSymbols
-  interface Matchers<R> {
+  interface Matchers<R, T = any> {
     /**
      * Note: Currently unimplemented
      * Passing assertion
      *
      * @param {String} message
      */
-    pass(message: string): R;
+    pass(message?: string): R;
 
     /**
      * Note: Currently unimplemented
@@ -482,7 +484,7 @@ declare namespace jest {
      *
      * @param {String} message
      */
-    fail(message: string): never;
+    fail(message?: string): R;
 
     /**
      * Use .toBeEmpty when checking if a String '', Array [], Object {} or Iterable (i.e. Map, Set) is empty.
@@ -941,7 +943,9 @@ declare namespace jest {
 
   // noinspection JSUnusedGlobalSymbols
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface Expect extends CustomMatchers<any> {}
+  interface Expect extends CustomMatchers<any> {
+    <T = any>(actual?: T): MyJestMatchers<any, T>;
+  }
 
   // noinspection JSUnusedGlobalSymbols
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
