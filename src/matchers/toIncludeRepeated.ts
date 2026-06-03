@@ -1,8 +1,11 @@
+import { escapeRegex } from '../utils';
+
 export function toIncludeRepeated(actual: unknown, expected: string, occurrences: number) {
   // @ts-expect-error OK to have implicit any for this.utils
   const { printReceived, printExpected, matcherHint } = this.utils;
 
-  const pass = typeof actual === 'string' && (actual.match(new RegExp(expected, 'g')) || []).length === occurrences;
+  const pass =
+    typeof actual === 'string' && (actual.match(new RegExp(escapeRegex(expected), 'g')) || []).length === occurrences;
 
   return {
     pass,

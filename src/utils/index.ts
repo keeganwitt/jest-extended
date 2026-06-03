@@ -12,3 +12,5 @@ export const isJestMockOrSpy: any = (value: any) => {
 
 export const containsEntry = (equals: any, obj: any, [key, value]: [any, any]) =>
   obj != null && Object.hasOwn(obj, key) && equals(obj[key], value);
+
+export const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\\\]\\]/g, '\\$&');
