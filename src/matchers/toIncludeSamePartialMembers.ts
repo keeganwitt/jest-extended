@@ -31,21 +31,18 @@ const predicate = (equals: any, actual: unknown, expected: any) => {
     return false;
   }
 
-  const remaining = expected.reduce((remaining, expectedPartial) => {
-    if (remaining === null) {
-      return remaining;
-    }
-
+  const remaining = [...actual];
+  for (const expectedPartial of expected) {
     const index = remaining.findIndex((actualValue: any) =>
       Object.entries(expectedPartial).every(entry => containsEntry(equals, actualValue, entry)),
     );
 
     if (index === -1) {
-      return null;
+      return false;
     }
 
-    return remaining.slice(0, index).concat(remaining.slice(index + 1));
-  }, actual);
+    remaining.splice(index, 1);
+  }
 
-  return !!remaining && remaining.length === 0;
+  return true;
 };
