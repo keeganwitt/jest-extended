@@ -17,6 +17,19 @@ describe('.toIncludeSamePartialMembers', () => {
     ]);
   });
 
+  test('passes when both arrays are empty', () => {
+    expect([]).toIncludeSamePartialMembers([]);
+  });
+
+  test('passes when actual has more properties than expected (partial match)', () => {
+    expect([{ a: 1, b: 2 }]).toIncludeSamePartialMembers([{ a: 1 }]);
+  });
+
+  test('passes when expected contains an empty object', () => {
+    expect([{ a: 1 }]).toIncludeSamePartialMembers([{}]);
+    expect([{}]).toIncludeSamePartialMembers([{}]);
+  });
+
   test('fails when array values do not contain any of the members of the set', () => {
     expect(() =>
       expect([{ hello: 'world' }, { foo: 'bar', baz: 'qux' }]).toIncludeSamePartialMembers([{ foo: 'qux' }]),
@@ -56,6 +69,11 @@ describe('.not.toIncludeSamePartialMembers', () => {
 
   test('passes when given object is not an array', () => {
     expect(1).not.toIncludeSamePartialMembers([{ foo: 'bar' }]);
+  });
+
+  test('passes when one array is empty and the other is not', () => {
+    expect([{ a: 1 }]).not.toIncludeSamePartialMembers([]);
+    expect([]).not.toIncludeSamePartialMembers([{ a: 1 }]);
   });
 
   test('fails when array values matches the members of the set', () => {
