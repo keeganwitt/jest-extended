@@ -27,6 +27,10 @@ describe('.toBeNegative', () => {
   test('fails when given Infinity', () => {
     expect(() => expect(Infinity).toBeNegative()).toThrowErrorMatchingSnapshot();
   });
+
+  test('fails when given a string', () => {
+    expect(() => expect('-1').toBeNegative()).toThrowErrorMatchingSnapshot();
+  });
 });
 
 describe('.not.toBeNegative', () => {
@@ -45,6 +49,10 @@ describe('.not.toBeNegative', () => {
 
   test('passes when given NaN', () => {
     expect(NaN).not.toBeNegative();
+  });
+
+  test('passes when given a string', () => {
+    expect('-1').not.toBeNegative();
   });
 
   test('fails when given negative number', () => {
