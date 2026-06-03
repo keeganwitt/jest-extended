@@ -36,8 +36,9 @@ const predicate = (equals: any, actual: unknown, expected: any) => {
       return remaining;
     }
 
+    const entries = Object.entries(expectedPartial);
     const index = remaining.findIndex((actualValue: any) =>
-      Object.entries(expectedPartial).every(entry => containsEntry(equals, actualValue, entry)),
+      entries.every(entry => containsEntry(equals, actualValue, entry)),
     );
 
     if (index === -1) {
