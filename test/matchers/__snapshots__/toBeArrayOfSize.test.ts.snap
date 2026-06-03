@@ -129,3 +129,19 @@ Received:
   value: <red>undefined</color>
   length: <red>"Not Accessible"</color>"
 `;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 1`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 2`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 3`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 4`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 5`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 6`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 7`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toBeArrayOfSize fails when given type of %s which is not an array 8`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
