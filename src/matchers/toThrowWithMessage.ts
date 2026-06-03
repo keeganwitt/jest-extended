@@ -1,8 +1,13 @@
-const predicate = (error: any, type: any, message: any) => {
+type ErrConstructor =
+  | (new (...args: any[]) => { message: string })
+  | (abstract new (...args: any[]) => { message: string })
+  | ((...args: any[]) => { message: string });
+
+const predicate = (error: unknown, type: ErrConstructor, message: string | RegExp) => {
   if (message instanceof RegExp) {
-    return error && error instanceof type && message.test(error.message);
+    return error instanceof (type as any) && message.test((error as any).message);
   }
-  return error && error instanceof type && error.message === message;
+  return error instanceof (type as any) && (error as any).message === message;
 };
 
 const positiveHint = (utils: any) =>
@@ -11,7 +16,7 @@ const positiveHint = (utils: any) =>
 const negativeHint = (utils: any) =>
   utils.matcherHint('.not.toThrowWithMessage', 'function', 'type', { secondArgument: 'message' });
 
-const passMessage = (utils: any, received: any, expected: any) =>
+const passMessage = (utils: any, received: unknown, expected: Error) =>
   negativeHint(utils) +
   '\n\n' +
   'Expected not to throw:\n' +
@@ -19,7 +24,7 @@ const passMessage = (utils: any, received: any, expected: any) =>
   'Thrown:\n' +
   `  ${utils.printReceived(received)}\n`;
 
-const failMessage = (utils: any, received: any, expected: any) =>
+const failMessage = (utils: any, received: unknown, expected: Error) =>
   positiveHint(utils) +
   '\n\n' +
   'Expected to throw:\n' +
@@ -27,11 +32,11 @@ const failMessage = (utils: any, received: any, expected: any) =>
   'Thrown:\n' +
   `  ${utils.printReceived(received)}\n`;
 
-const getExpectedError = (type: any, message: any) => {
+const getExpectedError = (type: ErrConstructor, message: string | RegExp) => {
   const messageStr = message.toString();
-  let expectedError;
+  let expectedError: Error;
   try {
-    expectedError = new type(messageStr);
+    expectedError = new (type as any)(messageStr);
   } catch {
     const name = type.name;
     expectedError = new Error();
@@ -42,11 +47,8 @@ const getExpectedError = (type: any, message: any) => {
 };
 
 export function toThrowWithMessage(
-  callbackOrPromiseReturn: () => void,
-  type:
-    | (new (...args: any[]) => { message: string })
-    | (abstract new (...args: any[]) => { message: string })
-    | ((...args: any[]) => { message: string }),
+  callbackOrPromiseReturn: (() => void) | unknown,
+  type: ErrConstructor,
   message: string | RegExp,
 ) {
   // @ts-expect-error OK to have implicit any for this.utils
@@ -94,7 +96,7 @@ export function toThrowWithMessage(
     error = callbackOrPromiseReturn;
   } else {
     try {
-      callbackOrPromiseReturn();
+      (callbackOrPromiseReturn as () => void)();
     } catch (e) {
       error = e;
     }

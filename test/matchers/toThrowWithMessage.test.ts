@@ -267,9 +267,9 @@ describe('.toThrowWithMessage', () => {
           utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
           promise: 'rejects',
         },
-        // @ts-expect-error this is intentional for the test
         rejectValue,
         Error,
+        // @ts-expect-error this is intentional for the test
         2,
       );
       expect(pass).toBe(false);
@@ -283,7 +283,6 @@ describe('.toThrowWithMessage', () => {
           utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
           promise: 'rejects',
         },
-        // @ts-expect-error this is intentional for the test
         rejectValue,
         TypeError,
         'Expected message',
@@ -299,7 +298,6 @@ describe('.toThrowWithMessage', () => {
           utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
           promise: 'rejects',
         },
-        // @ts-expect-error this is intentional for the test
         rejectValue,
         TypeError,
         'Expected message',
@@ -315,7 +313,6 @@ describe('.toThrowWithMessage', () => {
           utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
           promise: 'rejects',
         },
-        // @ts-expect-error this is intentional for the test
         rejectValue,
         TypeError,
         /Expected message/,
@@ -331,7 +328,6 @@ describe('.toThrowWithMessage', () => {
           utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
           promise: 'rejects',
         },
-        // @ts-expect-error this is intentional for the test
         rejectValue,
         UnconstructableError,
         '42',
@@ -347,7 +343,6 @@ describe('.toThrowWithMessage', () => {
           utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
           promise: 'rejects',
         },
-        // @ts-expect-error this is intentional for the test
         rejectValue,
         UnconstructableError,
         /42/,
