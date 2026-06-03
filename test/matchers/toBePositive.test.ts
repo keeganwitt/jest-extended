@@ -18,10 +18,29 @@ describe('.toBePositive', () => {
   test('fails when not given a positive BigInt', () => {
     expect(() => expect(-1n).toBePositive()).toThrowErrorMatchingSnapshot();
   });
+
+  test('fails when given a string', () => {
+    expect(() => expect('1').toBePositive()).toThrowErrorMatchingSnapshot();
+  });
 });
 
 describe('.not.toBePositive', () => {
-  test.each([[false], [''], [-1], [0], [{}], [[]], [() => {}], [undefined], [null], [NaN], [Infinity], [-1n], [0n]])(
+  test.each([
+    [false],
+    [''],
+    ['1'],
+    [-1],
+    [0],
+    [{}],
+    [[]],
+    [() => {}],
+    [undefined],
+    [null],
+    [NaN],
+    [Infinity],
+    [-1n],
+    [0n],
+  ])(
     'passes when not given a positive number: %s',
     given => {
       expect(given).not.toBePositive();
