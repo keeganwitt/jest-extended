@@ -55,6 +55,18 @@ describe('.not.toBeEmpty', () => {
     expect({ foo: 'bar' }).not.toBeEmpty();
   });
 
+  test('passes when given a non-iterable value', () => {
+    expect(1).not.toBeEmpty();
+  });
+
+  test('passes when given null', () => {
+    expect(null).not.toBeEmpty();
+  });
+
+  test('passes when given undefined', () => {
+    expect(undefined).not.toBeEmpty();
+  });
+
   test('When empty Set is passed', () => {
     expect(new Set(['value'])).not.toBeEmpty();
   });
