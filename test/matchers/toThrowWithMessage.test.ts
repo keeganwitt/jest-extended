@@ -43,6 +43,32 @@ describe('.toThrowWithMessage', () => {
     expect(message()).toMatchSnapshot();
   });
 
+  test('fails when error message is not provided (null)', () => {
+    const callback = () => {};
+    // @ts-expect-error this is intentional for the test
+    const { pass, message } = toThrowWithMessage.call(
+      { utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived } },
+      callback,
+      Error,
+      null,
+    );
+    expect(pass).toBe(false);
+    expect(message()).toMatchSnapshot();
+  });
+
+  test('fails when error message is not provided (empty string)', () => {
+    const callback = () => {};
+    // @ts-expect-error this is intentional for the test
+    const { pass, message } = toThrowWithMessage.call(
+      { utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived } },
+      callback,
+      Error,
+      '',
+    );
+    expect(pass).toBe(false);
+    expect(message()).toMatchSnapshot();
+  });
+
   test('fails when error type is not provided', () => {
     const callback = () => {};
     // @ts-expect-error this is intentional for the test
@@ -246,6 +272,38 @@ describe('.toThrowWithMessage', () => {
       expect(message()).toMatchSnapshot();
     });
 
+    test('fails on rejects when error message is not provided (null)', () => {
+      const rejectValue = true;
+      // @ts-expect-error this is intentional for the test
+      const { pass, message } = toThrowWithMessage.call(
+        {
+          utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+          promise: 'rejects',
+        },
+        rejectValue,
+        Error,
+        null,
+      );
+      expect(pass).toBe(false);
+      expect(message()).toMatchSnapshot();
+    });
+
+    test('fails on rejects when error message is not provided (empty string)', () => {
+      const rejectValue = true;
+      // @ts-expect-error this is intentional for the test
+      const { pass, message } = toThrowWithMessage.call(
+        {
+          utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+          promise: 'rejects',
+        },
+        rejectValue,
+        Error,
+        '',
+      );
+      expect(pass).toBe(false);
+      expect(message()).toMatchSnapshot();
+    });
+
     test('fails on rejects when error type is not provided', () => {
       const rejectValue = true;
       // @ts-expect-error this is intentional for the test
@@ -393,6 +451,53 @@ describe('.not.toThrowWithMessage', () => {
     expect(message()).toMatchSnapshot();
   });
 
+  test('passes when error message is not provided (undefined)', () => {
+    const callback = () => {};
+    // @ts-expect-error this is intentional for the test
+    const { pass, message } = toThrowWithMessage.call(
+      {
+        utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+        isNot: true,
+      },
+      callback,
+      Error,
+    );
+    expect(pass).toBe(false);
+    expect(message()).toMatchSnapshot();
+  });
+
+  test('passes when error message is not provided (null)', () => {
+    const callback = () => {};
+    // @ts-expect-error this is intentional for the test
+    const { pass, message } = toThrowWithMessage.call(
+      {
+        utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+        isNot: true,
+      },
+      callback,
+      Error,
+      null,
+    );
+    expect(pass).toBe(false);
+    expect(message()).toMatchSnapshot();
+  });
+
+  test('passes when error message is not provided (empty string)', () => {
+    const callback = () => {};
+    // @ts-expect-error this is intentional for the test
+    const { pass, message } = toThrowWithMessage.call(
+      {
+        utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+        isNot: true,
+      },
+      callback,
+      Error,
+      '',
+    );
+    expect(pass).toBe(false);
+    expect(message()).toMatchSnapshot();
+  });
+
   test('passes when a different type of error is thrown', () => {
     const callback = () => {
       throw TypeError('Expected message');
@@ -461,6 +566,56 @@ describe('.not.toThrowWithMessage', () => {
           'Expected message',
         ),
       ).rejects.toThrowErrorMatchingSnapshot();
+    });
+
+    test('passes on rejects when error message is not provided (undefined)', () => {
+      const rejectValue = true;
+      // @ts-expect-error this is intentional for the test
+      const { pass, message } = toThrowWithMessage.call(
+        {
+          utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+          promise: 'rejects',
+          isNot: true,
+        },
+        rejectValue,
+        Error,
+      );
+      expect(pass).toBe(false);
+      expect(message()).toMatchSnapshot();
+    });
+
+    test('passes on rejects when error message is not provided (null)', () => {
+      const rejectValue = true;
+      // @ts-expect-error this is intentional for the test
+      const { pass, message } = toThrowWithMessage.call(
+        {
+          utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+          promise: 'rejects',
+          isNot: true,
+        },
+        rejectValue,
+        Error,
+        null,
+      );
+      expect(pass).toBe(false);
+      expect(message()).toMatchSnapshot();
+    });
+
+    test('passes on rejects when error message is not provided (empty string)', () => {
+      const rejectValue = true;
+      // @ts-expect-error this is intentional for the test
+      const { pass, message } = toThrowWithMessage.call(
+        {
+          utils: { matcherHint: matcherHint, printExpected: printExpected, printReceived: printReceived },
+          promise: 'rejects',
+          isNot: true,
+        },
+        rejectValue,
+        Error,
+        '',
+      );
+      expect(pass).toBe(false);
+      expect(message()).toMatchSnapshot();
     });
 
     test('passes on resolved promise', async () => {
