@@ -16,8 +16,7 @@ export function toContainAllEntries<E = unknown>(
     !Array.isArray(actual) &&
     expected.length == Object.keys(actual as Record<string, unknown>).length &&
     expected.every(entry =>
-      // @ts-expect-error containsEntry takes an any type
-      containsEntry((a, b) => this.equals(a, b, this.customTesters), actual, entry as [any, any]),
+      containsEntry((a, b) => this.equals(a, b, this.customTesters), actual, entry as unknown as [PropertyKey, unknown]),
     );
 
   return {

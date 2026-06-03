@@ -21,7 +21,6 @@ export function toHaveBeenCalledBefore(
   let pass = false;
   let firstInvocationCallOrder = null;
   let secondInvocationCallOrder = null;
-  // @ts-expect-error isJestMockOrSpy provides the type check
   firstInvocationCallOrder = actual.mock.invocationCallOrder;
   secondInvocationCallOrder = expected.mock.invocationCallOrder;
   pass = predicate(firstInvocationCallOrder, secondInvocationCallOrder, failIfNoSecondInvocation);
