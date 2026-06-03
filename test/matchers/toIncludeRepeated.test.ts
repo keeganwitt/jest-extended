@@ -38,4 +38,10 @@ describe('.not.toIncludeRepeated', () => {
   test('passes when given string does not have a given substring the correct number of times', () => {
     expect(string).not.toIncludeRepeated('world', 2);
   });
+
+  test('passes when given string contains regex metacharacters and should be treated as literal', () => {
+    expect('a.b.c.').not.toIncludeRepeated('.', 4);
+    expect('a.b.c.').toIncludeRepeated('.', 3);
+    expect('a.*b').toIncludeRepeated('.*', 1);
+  });
 });
