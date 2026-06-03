@@ -23,6 +23,10 @@ describe('.toContainValue', () => {
     expect(deepArray).toContainValue([{ hello: 'world' }]);
   });
 
+  test('passes when given object contains NaN', () => {
+    expect({ a: NaN }).toContainValue(NaN);
+  });
+
   test('fails when given object does not contain primitive value', () => {
     expect(() => expect(shallow).toContainValue('hello')).toThrowErrorMatchingSnapshot();
   });
@@ -56,6 +60,10 @@ describe('.not.toContainValue', () => {
 
   test('passes when given object does not contain array value', () => {
     expect(deepArray).not.toContainValue([{ foo: 'bar' }]);
+  });
+
+  test('passes when given object does not contain NaN', () => {
+    expect({ a: 1 }).not.toContainValue(NaN);
   });
 
   test('fails when given object contains primitive value', () => {
