@@ -17,3 +17,7 @@ Expected string to include:
 Received:
   <red>"hello world"</color>"
 `;
+
+exports[`.toInclude fails when given a number 1`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
+
+exports[`.toInclude fails when given null 1`] = `"Expected this to be instanceof ExpectMatcherUtils, but received [native code: JSLexicalEnvironment]"`;
