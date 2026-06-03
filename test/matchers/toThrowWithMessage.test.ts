@@ -220,6 +220,33 @@ describe('.toThrowWithMessage', () => {
     expect(message()).toMatchSnapshot();
   });
 
+  test('falls back to a basic Error when the provided type constructor throws', () => {
+    class ThrowingConstructorError extends Error {
+      constructor(message?: string) {
+        if (message) {
+          throw new Error('Constructor exploded!');
+        }
+        super();
+        this.name = 'ThrowingConstructorError';
+      }
+    }
+
+    const callback = () => {
+      throw new Error('Actual error');
+    };
+
+    const { pass, message } = toThrowWithMessage.call(
+      { utils: { matcherHint, printExpected, printReceived } },
+      callback,
+      ThrowingConstructorError,
+      'Expected message',
+    );
+
+    expect(pass).toBe(false);
+    expect(message()).toContain('ThrowingConstructorError');
+    expect(message()).toContain('Expected message');
+  });
+
   describe('Async', () => {
     test('fails on rejects when return value is not provided', () => {
       // @ts-expect-error this is intentional for the test
