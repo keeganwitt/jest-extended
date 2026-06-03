@@ -13,3 +13,10 @@ exports[`.toBeNaN fails when given a number 1`] = `
 Expected value to not be a number received:
   <red>3</color>"
 `;
+
+exports[`.toBeNaN fails when given null 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).toBeNaN()</intensity>
+
+Expected value to not be a number received:
+  <red>null</color>"
+`;
