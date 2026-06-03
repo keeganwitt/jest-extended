@@ -104,6 +104,54 @@ describe('.toHaveBeenCalledAfter', () => {
       expect(() => expect(mock1).toHaveBeenCalledAfter(mock2, true)).toThrowErrorMatchingSnapshot();
     });
   });
+
+  test('fails when given first mock is called but second mock is not called', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock1();
+    expect(() => expect(mock1).toHaveBeenCalledAfter(mock2)).toThrowErrorMatchingSnapshot();
+  });
+
+  test('fails when given first mock is called but second mock is not called and failIfNoFirstInvocation is false', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock1();
+    expect(() => expect(mock1).toHaveBeenCalledAfter(mock2, false)).toThrowErrorMatchingSnapshot();
+  });
+
+  test('fails when given first mock is not called and second mock is called', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock2();
+    expect(() => expect(mock1).toHaveBeenCalledAfter(mock2)).toThrowErrorMatchingSnapshot();
+  });
+
+  test('passes when given first mock is not called and second mock is called and failIfNoFirstInvocation is false', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock2();
+    expect(mock1).toHaveBeenCalledAfter(mock2, false);
+  });
+
+  test('passes when first smallest invocation is after second smallest invocation', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock2(); // 1
+    mock1(); // 2
+    mock2(); // 3
+    mock1(); // 4
+    expect(mock1).toHaveBeenCalledAfter(mock2);
+  });
+
+  test('fails when first smallest invocation is before second smallest invocation', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock1(); // 1
+    mock2(); // 2
+    mock1(); // 3
+    mock2(); // 4
+    expect(() => expect(mock1).toHaveBeenCalledAfter(mock2)).toThrowErrorMatchingSnapshot();
+  });
 });
 
 describe('.not.toHaveBeenCalledAfter', () => {
@@ -182,5 +230,53 @@ describe('.not.toHaveBeenCalledAfter', () => {
 
       expect(mock1).not.toHaveBeenCalledAfter(mock2, true);
     });
+  });
+
+  test('passes when given first mock is called but second mock is not called', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock1();
+    expect(mock1).not.toHaveBeenCalledAfter(mock2);
+  });
+
+  test('passes when given first mock is called but second mock is not called and failIfNoFirstInvocation is false', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock1();
+    expect(mock1).not.toHaveBeenCalledAfter(mock2, false);
+  });
+
+  test('passes when given first mock is not called and second mock is called', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock2();
+    expect(mock1).not.toHaveBeenCalledAfter(mock2);
+  });
+
+  test('fails when given first mock is not called and second mock is called and failIfNoFirstInvocation is false', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock2();
+    expect(() => expect(mock1).not.toHaveBeenCalledAfter(mock2, false)).toThrowErrorMatchingSnapshot();
+  });
+
+  test('passes when first smallest invocation is before second smallest invocation', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock1(); // 1
+    mock2(); // 2
+    mock1(); // 3
+    mock2(); // 4
+    expect(mock1).not.toHaveBeenCalledAfter(mock2);
+  });
+
+  test('fails when first smallest invocation is after second smallest invocation', () => {
+    const mock1 = jest.fn();
+    const mock2 = jest.fn();
+    mock2(); // 1
+    mock1(); // 2
+    mock2(); // 3
+    mock1(); // 4
+    expect(() => expect(mock1).not.toHaveBeenCalledAfter(mock2)).toThrowErrorMatchingSnapshot();
   });
 });
