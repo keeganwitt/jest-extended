@@ -44,3 +44,12 @@ Expected object to contain key:
 Received:
   <red>{"hello": "world"}</color>"
 `;
+
+exports[`.toContainKey fails when key is in the prototype 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).toContainKey(</intensity><green>expected</color><dim>)</intensity>
+
+Expected object to contain key:
+  <green>"protoKey"</color>
+Received:
+  <red>{"ownKey": "ownValue"}</color>"
+`;

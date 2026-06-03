@@ -13,6 +13,14 @@ describe('.toContainKey', () => {
     expect(() => expect(data).toContainKey('missing')).toThrowErrorMatchingSnapshot();
   });
 
+  test('fails when key is in the prototype', () => {
+    const proto = { protoKey: 'protoValue' };
+    const obj = Object.create(proto);
+    obj.ownKey = 'ownValue';
+
+    expect(() => expect(obj).toContainKey('protoKey')).toThrowErrorMatchingSnapshot();
+  });
+
   test('fails when actual is not an object', () => {
     expect(() => expect(null).toContainKey('hello')).toThrowErrorMatchingSnapshot();
     expect(() => expect(undefined).toContainKey('hello')).toThrowErrorMatchingSnapshot();
@@ -23,6 +31,14 @@ describe('.toContainKey', () => {
 describe('.not.toContainKey', () => {
   test('passes when given object does not contain key', () => {
     expect(data).not.toContainKey('missing');
+  });
+
+  test('passes when key is in the prototype', () => {
+    const proto = { protoKey: 'protoValue' };
+    const obj = Object.create(proto);
+    obj.ownKey = 'ownValue';
+
+    expect(obj).not.toContainKey('protoKey');
   });
 
   test('fails when given object contains key', () => {

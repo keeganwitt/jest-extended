@@ -35,3 +35,21 @@ Expected object to contain all keys:
 Received:
   <red>{"a": "foo", "b": "bar", "c": "baz"}</color>"
 `;
+
+exports[`.toContainKeys fails when keys are in the prototype 1`] = `
+"<dim>expect(</intensity><red>received</color><dim>).toContainKeys(</intensity><green>expected</color><dim>)</intensity>
+
+Expected object to contain all keys:
+  <green>["protoKey"]</color>
+Received:
+  <red>{"ownKey": "ownValue"}</color>"
+`;
+
+exports[`.toContainKeys fails when keys are in the prototype 2`] = `
+"<dim>expect(</intensity><red>received</color><dim>).toContainKeys(</intensity><green>expected</color><dim>)</intensity>
+
+Expected object to contain all keys:
+  <green>["ownKey", "protoKey"]</color>
+Received:
+  <red>{"ownKey": "ownValue"}</color>"
+`;
