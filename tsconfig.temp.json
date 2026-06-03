@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.test.json",
+  "include": [
+    "test/matchers/toBeArrayOfSize.test.ts",
+    "test/matchers/pass.test.ts",
+    "test/matchers/fail.test.ts",
+    "types/index.d.ts",
+    "src/matchers/toBeArrayOfSize.ts",
+    "src/matchers/pass.ts",
+    "src/matchers/fail.ts"
+  ]
+}
