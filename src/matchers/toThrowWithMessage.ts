@@ -11,21 +11,14 @@ const positiveHint = (utils: any) =>
 const negativeHint = (utils: any) =>
   utils.matcherHint('.not.toThrowWithMessage', 'function', 'type', { secondArgument: 'message' });
 
+const formatMessage = (hint: string, label: string, expected: any, received: any, utils: any) =>
+  `${hint}\n\n${label}:\n  ${utils.printExpected(expected)}\nThrown:\n  ${utils.printReceived(received)}\n`;
+
 const passMessage = (utils: any, received: any, expected: any) =>
-  negativeHint(utils) +
-  '\n\n' +
-  'Expected not to throw:\n' +
-  `  ${utils.printExpected(expected)}\n` +
-  'Thrown:\n' +
-  `  ${utils.printReceived(received)}\n`;
+  formatMessage(negativeHint(utils), 'Expected not to throw', expected, received, utils);
 
 const failMessage = (utils: any, received: any, expected: any) =>
-  positiveHint(utils) +
-  '\n\n' +
-  'Expected to throw:\n' +
-  `  ${utils.printExpected(expected)}\n` +
-  'Thrown:\n' +
-  `  ${utils.printReceived(received)}\n`;
+  formatMessage(positiveHint(utils), 'Expected to throw', expected, received, utils);
 
 const getExpectedError = (type: any, message: any) => {
   const messageStr = message.toString();
@@ -57,23 +50,21 @@ export function toThrowWithMessage(
     return {
       pass: false,
       message: () =>
-        positiveHint(utils) +
-        '\n\n' +
-        `Received value must be a function but instead "${callbackOrPromiseReturn}" was found`,
+        `${positiveHint(utils)}\n\nReceived value must be a function but instead "${callbackOrPromiseReturn}" was found`,
     };
   }
 
   if (!type || typeof type !== 'function') {
     return {
       pass: false,
-      message: () => positiveHint(utils) + '\n\n' + `Expected type to be a function but instead "${type}" was found`,
+      message: () => `${positiveHint(utils)}\n\nExpected type to be a function but instead "${type}" was found`,
     };
   }
 
   if (!message) {
     return {
       pass: false,
-      message: () => positiveHint(utils) + '\n\n' + ' Message argument is required. ',
+      message: () => `${positiveHint(utils)}\n\n Message argument is required. `,
     };
   }
 
@@ -81,11 +72,7 @@ export function toThrowWithMessage(
     return {
       pass: false,
       message: () =>
-        positiveHint(utils) +
-        '\n\n' +
-        'Unexpected argument for message\n' +
-        'Expected: "string" or "regexp\n' +
-        `Got: "${message}"`,
+        `${positiveHint(utils)}\n\nUnexpected argument for message\nExpected: "string" or "regexp\nGot: "${message}"`,
     };
   }
 
