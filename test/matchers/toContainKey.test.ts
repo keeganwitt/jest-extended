@@ -18,6 +18,12 @@ describe('.toContainKey', () => {
     expect(() => expect(undefined).toContainKey('hello')).toThrowErrorMatchingSnapshot();
     expect(() => expect(42).toContainKey('hello')).toThrowErrorMatchingSnapshot();
   });
+
+  test('fails when given object contains key on its prototype', () => {
+    const proto = { hello: 'world' };
+    const actual = Object.create(proto);
+    expect(() => expect(actual).toContainKey('hello')).toThrowErrorMatchingSnapshot();
+  });
 });
 
 describe('.not.toContainKey', () => {
@@ -33,5 +39,11 @@ describe('.not.toContainKey', () => {
     expect(() => expect(null).not.toContainKey('hello'));
     expect(() => expect(undefined).not.toContainKey('hello'));
     expect(() => expect(42).not.toContainKey('hello'));
+  });
+
+  test('passes when given object contains key on its prototype', () => {
+    const proto = { hello: 'world' };
+    const actual = Object.create(proto);
+    expect(actual).not.toContainKey('hello');
   });
 });
