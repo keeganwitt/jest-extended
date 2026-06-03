@@ -13,6 +13,10 @@ describe('.toIncludeRepeated', () => {
     expect(string).toIncludeRepeated('l', 3);
   });
 
+  test('fails when given string includes regex special characters and is not a literal match', () => {
+    expect(() => expect(string).toIncludeRepeated('.*', 1)).toThrowErrorMatchingSnapshot();
+  });
+
   test('fails when given string does not include given substring', () => {
     expect(() => expect(string).toIncludeRepeated('bob', 1)).toThrowErrorMatchingSnapshot();
   });
