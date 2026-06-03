@@ -13,6 +13,18 @@ describe('.toIncludeRepeated', () => {
     expect(string).toIncludeRepeated('l', 3);
   });
 
+  test('passes when a string includes a given substring with regex special characters', () => {
+    expect('a.b.c').toIncludeRepeated('.', 2);
+    expect('a[b]c').toIncludeRepeated('[', 1);
+    expect('a(b)c').toIncludeRepeated('(', 1);
+    expect('a?b?c').toIncludeRepeated('?', 2);
+  });
+
+  test('passes when checking for empty string occurrences', () => {
+    expect('abc').toIncludeRepeated('', 4);
+    expect('').toIncludeRepeated('', 1);
+  });
+
   test('fails when given string does not include given substring', () => {
     expect(() => expect(string).toIncludeRepeated('bob', 1)).toThrowErrorMatchingSnapshot();
   });
