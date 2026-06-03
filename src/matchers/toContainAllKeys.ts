@@ -5,8 +5,9 @@ export function toContainAllKeys<E = unknown>(actual: unknown, expected: readonl
   const { printExpected, printReceived, matcherHint } = this.utils;
 
   let pass = false;
+  let objectKeys: string[] | null = null;
   if (typeof actual === 'object' && actual !== null && !Array.isArray(actual)) {
-    const objectKeys = Object.keys(actual as Record<string, unknown>);
+    objectKeys = Object.keys(actual as Record<string, unknown>);
     pass =
       objectKeys.length === expected.length &&
       // @ts-expect-error OK to have implicit any for this.equals
@@ -15,19 +16,21 @@ export function toContainAllKeys<E = unknown>(actual: unknown, expected: readonl
 
   return {
     pass,
-    message: () =>
-      pass
+    message: () => {
+      const receivedKeys = objectKeys || Object.keys(actual as Record<string, unknown>);
+      return pass
         ? matcherHint('.not.toContainAllKeys') +
-          '\n\n' +
-          'Expected object to not contain all keys:\n' +
-          `  ${printExpected(expected)}\n` +
-          'Received:\n' +
-          `  ${printReceived(Object.keys(actual as Record<string, unknown>))}`
+            '\n\n' +
+            'Expected object to not contain all keys:\n' +
+            `  ${printExpected(expected)}\n` +
+            'Received:\n' +
+            `  ${printReceived(receivedKeys)}`
         : matcherHint('.toContainAllKeys') +
-          '\n\n' +
-          'Expected object to contain all keys:\n' +
-          `  ${printExpected(expected)}\n` +
-          'Received:\n' +
-          `  ${printReceived(Object.keys(actual as Record<string, unknown>))}`,
+            '\n\n' +
+            'Expected object to contain all keys:\n' +
+            `  ${printExpected(expected)}\n` +
+            'Received:\n' +
+            `  ${printReceived(receivedKeys)}`;
+    },
   };
 }
