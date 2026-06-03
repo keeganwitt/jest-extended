@@ -58,7 +58,13 @@ const mockCheckFailMessage = (utils: any, value: unknown, isReceivedValue: boole
   );
 };
 
-const smallest = (ns: number[]) => ns.reduce((acc: number, n: number) => (acc < n ? acc : n));
+const smallest = (ns: number[]) => {
+  let min = ns[0];
+  for (let i = 1; i < ns.length; i++) {
+    if (ns[i] < min) min = ns[i];
+  }
+  return min;
+};
 
 const predicate = (
   firstInvocationCallOrder: number[],
