@@ -38,4 +38,18 @@ describe('.not.toIncludeRepeated', () => {
   test('passes when given string does not have a given substring the correct number of times', () => {
     expect(string).not.toIncludeRepeated('world', 2);
   });
+
+  test('should treat expected string as a literal, not a regex', () => {
+    expect('axb').not.toIncludeRepeated('a.b', 1);
+    expect('a.b').toIncludeRepeated('a.b', 1);
+  });
+
+  test('should not be vulnerable to ReDoS', () => {
+    const malicious = '(a+)+$';
+    const input = 'a'.repeat(25) + 'x';
+    const start = Date.now();
+    expect(input).not.toIncludeRepeated(malicious, 1);
+    const end = Date.now();
+    expect(end - start).toBeLessThan(1000);
+  });
 });
