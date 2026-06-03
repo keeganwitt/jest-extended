@@ -1,16 +1,11 @@
+import { validatePredicate } from 'src/utils';
+
 export function toSatisfyAny(actual: unknown, expected: (x: unknown) => boolean) {
   // @ts-expect-error OK to have implicit any for this.utils
   const { printReceived, printExpected, matcherHint } = this.utils;
 
-  if (typeof expected !== 'function') {
-    return {
-      pass: false,
-      message: () =>
-        matcherHint('.toSatisfyAny') +
-        '\n\n' +
-        `Expected predicate to be a function but instead "${expected}" was found`,
-    };
-  }
+  const failure = validatePredicate(expected, matcherHint('.toSatisfyAny'));
+  if (failure) return failure;
 
   let pass = false;
   if (Array.isArray(actual)) {
